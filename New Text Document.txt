@@ -1,0 +1,326 @@
+1)               Internal conference no 6627
+
+2)               Skype Conference ID: 54105529
+
+
+
+
+
+ http://disneyangular.s3-website-us-west-2.amazonaws.com
+
+
+
+
+
+
+
+ changed via SecurityProperties using the security.* prefix in application.properties as given below. 
+
+security.basic.enabled: It enables basic authentication. Default value is true. 
+security.basic.path: It configures paths to apply security. We need to provide comma separated paths. 
+security.enable-csrf: It enables CSRF. Default value is false. 
+security.require-ssl: It enables and disables SSL. Default value is false. 
+security.sessions: Default value is stateless. Values can be always, never, if_required, stateless. 
+security.user.name: It configures user name. Default user is user. 
+security.user.password: It configures password. 
+security.user.role: It configures role. Default role is USER. 
+
+
+
+@RequestMapping-- It maps to all the given request.
+@PutMapping-- It is used to update or register specific mapping definition for a specific type.
+@GetMapping-- IT is used to the info based on the given resource.
+@PostMapping-- IT is used to create new resource.
+@Deletemapping-- It is used to delete the resource.
+@RestController-- is often used for APIs that serve JSON, XML, etc. 
+Your controller methods will return an object that will be serialized to one or more of these formats.
+@ResponseBody-- bind the parameter to the response body
+@RequestBody-- bind the method defination to the body of the http request body.
+@PathVariable-- It will take the value form the specified path form URl to process the request, passed 
+inside the method as a argument.
+
+
+
+
+
+
+DROP TABLE IF EXISTS `resort_reservation`;
+SET @@auto_increment_increment=5;
+CREATE TABLE `resort_reservation` (
+    `r_reservation_number` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `guest_id_fk` BIGINT(20) UNSIGNED NOT NULL,
+    `room_type` VARCHAR(50) NOT NULL,
+    `arrival_date` DATETIME NOT NULL,
+    `departure_date` DATETIME NOT NULL,
+    `no_of_people` INT(11) NOT NULL,
+    `status` VARCHAR(10) NOT NULL,
+    `created_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`r_reservation_number`),
+    KEY `guest_id_fk_idx` (`guest_id_fk`),
+    CONSTRAINT `guest_id_fk` FOREIGN KEY (`guest_id_fk`)
+        REFERENCES `guest_profile` (`guest_id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+)  ENGINE=INNODB AUTO_INCREMENT=5000;
+
+
+
+  
+@GetMapping("/view/{guestID}")
+	public List<Object> viewItenarary(@PathVariable long guestID) {
+		List<Object> list = new ArrayList<>();
+
+		List<Resort> resort = bookingService.getAllResortDetails(guestID);
+		List<Dinning> dinning = bookingService.getAllDiningDetails(guestID);
+
+		list.add(resort);
+		list.add(dinning);
+		return list; 
+ 
+
+{
+  "dining_type" : "double",
+  "arrival_date": "2015-12-20",
+  "no_of_people" : 2,
+  "status" : "8093401286",
+  "created_date" : "2015-12-20",
+  "updated_date" : "2015-12-21"
+}
+
+https://www.youtube.com/watch?v=vFD2gu007dc&feature=youtu.be
+
+
+
+GuestProfile empStub = new GuestProfile(102,"dummy@gmail.com", "ashishk","sinhaa",
+				"BangloreMarathali","8093401286","ashish097",new Date(),new Date());
+
+..
+CTY02904
+
+
+
+myItinerary-frontend
+
+
+
+
+
+	
+	
+	
+	//------------------------- VIEW---------//
+	/*@Override
+	public GuestProfile getuserbyID(Integer id) {
+		String sql = "SELECT  *  FROM guest_profile INNER JOIN  resort_reservation ON resort_reservation.guest_id_fk=? and guest_profile.guest_id=? INNER JOIN "
+				+ "dining_reservation ON dining_reservation.guestid_fk=? and guest_profile.guest_id=? ";
+				
+		LOGGER.info("Executing ALL DETAILS OF USER<RESORT<DINING");
+		Object[] param = {id,id,id,id};			
+		
+		
+		DisneyRowMapper5 mapper = new DisneyRowMapper5();
+		jdbcTemplate.query(sql, mapper,param);
+		GuestProfile p = mapper.getG();
+		return p;
+	}*/
+
+
+
+
+	    
+	  
+	    /*//Resort
+	    private List<ResortReservation> personItems = new ArrayList<ResortReservation>();
+
+		public void setPersonItems(List<ResortReservation> personItems) {
+			this.personItems = personItems;
+		}
+
+
+		public void addItem(ResortReservation item){
+		this.personItems.add(item);
+		}
+		
+		public List<ResortReservation> getPersonItems() {
+			return personItems;
+		}
+
+
+		public List<DiningReservation> getPersonItems1() {
+			return personItems1;
+		}*/
+
+		/*//Dining
+		private List<DiningReservation> personItems1 = new ArrayList<DiningReservation>();
+
+		public void setPersonItems1(List<DiningReservation> personItems) {
+			this.personItems1 = personItems;
+		}
+
+
+		public void addItem1(DiningReservation item){
+		this.personItems1.add(item);
+		}*/
+
+
+
+/*	public GuestProfile getG() {
+		return g;
+	}*/
+
+
+
+
+
+
+/*package com.DisneyResort.Disney.Disneymap;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import com.DisneyResort.Disney.DiningReservation;
+import com.DisneyResort.Disney.GuestProfile;
+import com.DisneyResort.Disney.ResortReservation;
+
+
+public class DisneyRowMapper5 implements RowMapper<GuestProfile> {
+
+	private GuestProfile g;
+
+	public GuestProfile mapRow(ResultSet row, int rowNum)
+			throws SQLException {
+		if (g == null) {
+			this.g = new GuestProfile ();
+			
+			g.setGuestID(row.getLong("guest_id"));
+			g.setEmail(row.getString("email"));
+			g.setFirstName(row.getString("first_name"));
+			g.setLastName(row.getString("last_name"));
+			g.setPhone(row.getString("phone"));
+			g.setAddress(row.getString("address"));
+			g.setPassword(row.getString("password"));
+			g.setCreated_date(row.getDate("created_date"));
+			g.setUpdated_date(row.getDate("updated_date"));
+		}
+		ResortReservation resort = new ResortReservation();
+		
+		resort.setrReservationNumber(row.getLong("r_reservation_number"));
+		resort.setGuestID(row.getLong("guest_id_fk"));
+		resort.setRoomType(row.getString("room_type"));
+		resort.setArrivalDate(row.getDate("arrival_date"));
+		resort.setDepartureDate(row.getDate("departure_date"));
+		resort.setNoOfPeople(row.getInt("no_of_people"));
+		resort.setStatus(row.getString("status"));
+		resort.setCreatedDate(row.getDate("created_date"));
+		resort.setUpdatedDate(row.getDate("updated_date"));
+		
+		DiningReservation din = new DiningReservation();
+		
+		din.setdReservationNumber(row.getLong("d_reservation_number"));
+		din.setGuestID(row.getLong("guest_id_fk"));
+		din.setDiningType(row.getString("dining_type"));
+		din.setArrivalDate(row.getDate("arrival_date"));
+		din.setNoOfPeople(row.getInt("no_of_people"));
+		din.setStatus(row.getString("status"));
+		din.setCreatedDate(row.getDate("created_date"));
+		din.setUpdatedDate(row.getDate("updated_date"));
+		
+		//this.g.addItem(resort);
+		//this.g.addItem1(din);
+		return null;
+	}
+
+	public final GuestProfile getG() {
+		return g;
+	}
+
+	public final ResortReservation getResort() {
+		return resort;
+	}	
+	
+}
+*/
+
+
+
+/*package com.DisneyResort.Disney.validtion;
+
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
+
+@Component
+public class ValidationErrorBuilder {
+	
+	 public  ValidationError fromBindingErrors(Errors errors, String message,String status) 
+	 {
+	        ValidationError error = new ValidationError("Validation failed. " + errors.getErrorCount() + " error(s)");
+	        for (ObjectError objectError : errors.getAllErrors()) {
+	            error.addValidationError(objectError.getDefaultMessage());
+	            error.addValidationError(objectError.getCode());
+	            error.addValidationError(message);
+	            error.addValidationError(status);
+	        }
+	        return error;
+	 }
+}
+
+*/
+
+
+/*	private int noOfPeople;
+	private String status;
+	private Date createdDate;
+	private Date updatedDate;*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0063010206433
+UTBI0JSD423
+SAKCHI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+33403803745
+sbin0006548
+agrico
